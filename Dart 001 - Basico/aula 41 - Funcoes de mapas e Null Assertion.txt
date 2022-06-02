@@ -1,0 +1,53 @@
+void main() {
+  // O Map ja é uma classe nullable entao eu posso ter Map<int, String>a;
+  Map<int, String?> ddds = {
+    11: 'São Paulo',
+    19: 'Campinas',
+    41: 'Curitiba',
+    49: null,
+  };
+
+  print(ddds.length);
+
+  ddds[61] = 'Brasilia';
+  
+  ddds.remove(49);
+
+  /*
+  print(ddds);
+
+  print(ddds.values);
+
+  print(ddds.keys);
+
+  print(ddds.containsKey(11));
+
+  print(ddds.containsValue('Campinas'));
+  
+  print(ddds.isEmpty);
+  
+  print(ddds.isNotEmpty);
+  */
+
+  ddds.forEach((key, value) {
+    print('Key $key Value $value');
+  });
+  
+  //ddds.clear();//Apaga todo o Map
+  
+  ddds.addAll({73 : 'Itabuna', 72 : 'Cidade Ficticia'});
+  
+  print(ddds);
+  
+  ddds.removeWhere((key,value) => key > 20);  
+  
+  print(ddds);
+  
+  
+  //String cidade = ddds[11] ?? 'Não Informado';
+  //  print(cidade.toUpperCase());
+  //OU
+  String cidade = ddds[11]!; //Cuidado pois ao ultilizar a !, pois tem que se ter certeza que tem valor neste id do Map
+    print(cidade.toUpperCase());
+  
+}

@@ -1,0 +1,24 @@
+void main() {
+  List<String> lista1 = [];
+
+  lista1.add('Eduardo');
+
+  List<String?> lista2 = [
+    'Eduardo',
+    'Matheus',
+    null,
+  ];
+
+  List<String>?
+      lista3; //Quando a ? esta apos o <> da lista quer dizer q a lista em si pode ser vazia
+
+  if (lista3 != null) {
+    lista3.add('Matheus');
+  }
+
+  List<String?>? lista4;
+
+  if (lista4 != null) {
+    lista4.add(null);
+  }
+}

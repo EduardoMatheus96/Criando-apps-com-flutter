@@ -1,0 +1,12 @@
+void main(){
+  List<String> nomes = [];
+  funcao(nomes);
+  print(nomes);
+}
+
+List<String> funcao(List<String> lista){
+  return lista
+    ..add('Daniel')
+    ..add('Ciolfi')
+    ..remove('Daniel');
+}

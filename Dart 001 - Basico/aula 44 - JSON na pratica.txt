@@ -1,0 +1,41 @@
+import 'dart:convert';
+
+void main() {
+  Map<String, dynamic> dados = json.decode(dadosDoUsuario());
+  //print(dados['nome']);
+  //print(dados['sobrenome']);
+  print(dados['endereco']);
+  print(dados['endereco']['cidade']);
+  print(dados['endereco']['numero']);
+  print(dados['cursos']);
+  print(dados['cursos'][0]);
+  print(dados['cursos'][0]['dificuldade']);
+}
+
+String dadosDoUsuario() {
+  return """
+  {
+  "nome" : "Eduardo Matheus",
+  "sobrenome" : "de Menezes Souto",
+  "idade" : 26,
+  "casado" : false,
+  "altura" : 1.82,
+  "cursos" : [
+    {
+      "nome" : "Dart",
+      "dificuldade" : 1
+    },
+    {
+      "nome" : "Flutter",
+      "dificuldade" : 2
+    }
+  ],
+  "endereco" : {
+    "cidade" : "Itabuna",
+    "Bairro" : "Centro",
+    "numero" : 51
+  }
+  
+}
+""";
+}

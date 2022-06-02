@@ -1,0 +1,16 @@
+void main(){
+  const nome = 'Daniel';
+  const idade = 50 + 30;
+  const lista = ['Daniel', 'Ciolfi'];
+
+// Diferente de const final é compilado durante a execução entao se eu setar um valor para hr e
+//ele sempre sera aquele valor
+  //final DateTime agora = DateTime.now();
+  final String sobrenome;
+  if(nome == 'Daniel'){
+    sobrenome = 'Ciolfi';
+  } else{
+      sobrenome = 'Não Sei';
+  }
+  //Posso alterar o valor de uma variavel tipo final mas isso so pode acontecer 1 vez
+}

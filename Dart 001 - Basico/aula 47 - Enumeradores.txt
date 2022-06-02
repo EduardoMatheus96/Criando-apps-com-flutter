@@ -1,0 +1,21 @@
+enum StatusPagamento {pendente, pago, reembolsado}
+
+void main() {
+  StatusPagamento status = StatusPagamento.pago;
+  // Para uma variavel do tipo enum qnd eu crio um switch(enum){} e aperto alt + enter em cima de switch ele ja me gera o switch pronto com as possibilidades de valor da variavel enum 
+  switch(status){
+    case StatusPagamento.pendente:
+      // TODO: Handle this case.
+      break;
+    case StatusPagamento.pago:
+      // TODO: Handle this case.
+      break;
+    case StatusPagamento.reembolsado:
+      // TODO: Handle this case.
+      break;
+}
+  
+  print(status.index);
+  print(StatusPagamento.values[status.index]);
+
+} 

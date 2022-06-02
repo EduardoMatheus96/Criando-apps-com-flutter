@@ -1,0 +1,27 @@
+void main() {
+  Pessoa pessoa1 = Pessoa(nome: 'Daniel', idade: 40);
+  pessoa1.nome;
+  pessoa1.idade;
+  pessoa1.comer();
+  
+  Pessoa.atributeStatic = ', Eduardo';
+  print(Pessoa.atributeStatic);
+  print(Pessoa.metodoStatic());
+}
+
+class Pessoa {
+  Pessoa({required this.nome, required this.idade});
+
+  String nome;
+  int idade;
+  
+  void comer(){
+    print('Comendo....');
+  }
+  
+  static String atributeStatic = 'abc';
+  
+  static String metodoStatic (){
+    return 'Ola mundo $atributeStatic';
+  }
+}

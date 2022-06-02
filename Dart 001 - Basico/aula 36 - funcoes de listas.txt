@@ -1,0 +1,46 @@
+void main() {
+  List dinamica = [
+    'Eduardo',
+    43,
+    false,
+    3.555,
+  ];
+  
+  List<String> nomes = [
+    'Eduardo',
+    'Matheus',
+  ];
+  
+  List<int> idades = [
+    14,
+    26,
+    30,
+  ];
+  
+  /*
+  print(idades.length);
+  print(idades.first);
+  print(idades.last);
+  print(idades[2]);
+  */
+ 
+  idades.add(4);
+  idades.add(466);
+  
+  idades.addAll([567, 25, 4634]);//addALL posso adicionar uma lista inteira
+  idades.insert(2,-2);//Inserir em uma posição especifica
+  
+  print(idades.contains(56));//verificar se  elemento faz parte da lista
+  print(idades.indexOf(4));//Retorna o indice do elemento caso ele faça parte da lista
+  
+  print(idades.remove(-4));//Remove o elemento da lista caso ele exista nela e retorna um bool para dizer se foi removido ou nao
+  print(idades.removeAt(3));//Remove o elemento no qual voce indicou o indice
+  
+  idades.shuffle();//Bagunça a ordem dos elementos da lista
+  
+  idades.clear();//Limpa a lista
+  
+  print(idades);
+  
+  
+}

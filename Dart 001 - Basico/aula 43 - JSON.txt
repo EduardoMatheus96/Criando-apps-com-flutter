@@ -1,0 +1,23 @@
+{
+  "nome" : "Eduardo Matheus",
+  "sobrenome" : "de Menezes Souto",
+  "idade" : 26,
+  "casado" : false,
+  "altura" : 1.82,
+  "cursos" : [
+    {
+      "nome" : "Dart",
+      "dificuldade" : 1
+    },
+    {
+      "nome" : "Flutter",
+      "dificuldade" : 2
+    }
+  ],
+  "endereco" : {
+    "cidade" : "Itabuna",
+    "Bairro" : "Centro",
+    "numero" : 51
+  }
+  
+}

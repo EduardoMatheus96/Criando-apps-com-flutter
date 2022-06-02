@@ -1,0 +1,24 @@
+void main() {
+  Pessoa pessoa1 = Pessoa(nome: 'Daniel', idade: 40);
+  print(pessoa1.nome);
+  print(pessoa1.idade);
+  
+  Pessoa? pessoa2;
+  print(pessoa2?.nome); //O ? do lado de pessoa faz com q se pessoa2.nome tiver valor vai dar o valor se nao ela printa null
+  print(pessoa2?.idade);
+  print(pessoa2?.cidade?.toUpperCase());//Cidade pode ser nullable tabem entao tenho q fzr a verificaçao por isso ? apos cidade
+  pessoa2?.comer(); // Caso eu nao tivesse colocar valores em pessoa2 essa funçao nao printaria o comendo
+  
+}
+
+class Pessoa {
+  Pessoa({required this.nome, required this.idade});
+
+  String nome;
+  int idade;
+  String? cidade;
+  
+ void comer(){
+   print('Comendo...');
+ }
+}

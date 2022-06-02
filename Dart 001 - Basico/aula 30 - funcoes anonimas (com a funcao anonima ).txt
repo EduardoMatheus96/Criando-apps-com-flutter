@@ -1,0 +1,31 @@
+void main() {
+  saudacoes('Eduardo', corpo: (i) {
+    for (int j = 0; j < i; j++) {
+      print('Ola $j');
+    }
+  });
+}
+
+void saudacoes(
+  String nome, {
+  bool mostrarAgora = true,
+  String? cliente,
+  required Function(int) corpo,
+}) {
+  print('Saudações ${nome.toUpperCase()}');
+
+  corpo(10);
+
+  String c = cliente ?? 'Não Informado';
+
+  print('Seja bem vindo ${c.toUpperCase()}!');
+
+  if (mostrarAgora) {
+    print('Agora: ${agora()}');
+  }
+}
+
+String agora() {
+  DateTime agora = DateTime.now();
+  return agora.toString();
+}

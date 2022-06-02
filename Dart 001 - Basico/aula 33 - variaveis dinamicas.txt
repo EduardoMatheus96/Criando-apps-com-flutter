@@ -1,0 +1,16 @@
+void main() {
+  var nome = 'Eduardo'; //com var nao é preciso expecificar o tipo da variavel pq o proprio Dart reconhece qual é o tipo
+  nome = 'Menezes';
+  //nome = 3;
+  
+  var idade = 40;
+  idade++;
+  
+  dynamic variavel = 'Eduardo'; // variaveis do tipo dynamic podem assumir qualquer tipo
+  variavel = 3;
+  variavel = true;
+  
+  num numero = 1; // tipo num pode assumir tanto inteiro quanto ponto fluante na msm variavel
+  
+}
+

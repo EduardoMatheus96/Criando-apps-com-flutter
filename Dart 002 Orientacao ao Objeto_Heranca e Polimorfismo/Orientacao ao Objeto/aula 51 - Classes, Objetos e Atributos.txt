@@ -1,0 +1,20 @@
+void main(){
+  Pessoa pessoa1 = Pessoa();
+  pessoa1.nome = 'Daniel';
+  pessoa1.idade = 40;
+  pessoa1.casado = true;
+  print(pessoa1.nome);
+  print(pessoa1.idade);
+  
+  Pessoa pessoa2 = Pessoa();
+  pessoa2.nome = 'Eduardo';
+  pessoa2.idade = 26;
+  print(pessoa2.nome);
+  print(pessoa2.idade);
+}
+
+class Pessoa{
+  String? nome;
+  int? idade;
+  bool casado = false;
+}

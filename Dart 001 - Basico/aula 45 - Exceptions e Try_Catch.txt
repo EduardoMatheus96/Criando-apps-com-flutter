@@ -1,0 +1,17 @@
+void main() {
+  try {
+    int resultado = 100 ~/ 2;
+    print(resultado);
+
+    double valor = double.parse('50.2a');// Outra forma seria em vez de usar o parse ultilizar o tryParse nesse caso se o numero nao podesse ser convertido retornaria null nesse caso o tipo da variavel tem que ser nullable ou seja doule? 
+    print(valor);
+  } on UnsupportedError {
+    print('Caiu Aqui');
+  } on FormatException catch (erro) {
+    print('Caiu no format exception ${erro.message}');
+  } catch (e) {
+    print(e);
+  } finally {
+    print('final 22');
+  }
+}

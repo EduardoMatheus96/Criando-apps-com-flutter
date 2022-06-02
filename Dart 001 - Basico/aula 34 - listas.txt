@@ -1,0 +1,26 @@
+void main() {
+  List dinamica = [
+    'Eduardo',
+    43,
+    false,
+    3.555,
+  ];
+  
+  List<String> nomes = [
+    'Eduardo',
+    'Matheus',
+  ];
+  
+  List<int> idades = [
+    14,
+    26,
+    30,
+  ];
+  
+  //print(idades.length);
+  print(idades.first);
+  print(idades.last);
+  print(idades[2]);
+  
+}
+

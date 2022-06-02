@@ -1,0 +1,42 @@
+void main(){
+  Pessoa pessoa1 = Pessoa();
+  pessoa1.nome = 'Daniel';
+  pessoa1.idade = 40;
+  print(pessoa1.nome);
+  print(pessoa1.idade);
+  
+  print(pessoa1.aniversario());
+  
+  pessoa1.casar();
+  print(pessoa1.casado);
+  
+  Pessoa pessoa2 = Pessoa();
+  pessoa2.nome = 'Eduardo';
+  pessoa2.idade = 26;
+  print(pessoa2.nome);
+  print(pessoa2.idade);
+  
+  print(pessoa2.aniversario());
+}
+
+class Pessoa{
+  String? nome;
+  int? idade;
+  bool casado = false;
+  
+  int? aniversario(){
+    print('Parabens $nome');
+    if(idade != null){
+      idade = idade! + 1;
+    }
+    return idade;
+  }
+  
+  void casar(){
+    casado = true;
+  }
+  
+  void trocarNome(String n){
+    nome = n;
+  }
+}

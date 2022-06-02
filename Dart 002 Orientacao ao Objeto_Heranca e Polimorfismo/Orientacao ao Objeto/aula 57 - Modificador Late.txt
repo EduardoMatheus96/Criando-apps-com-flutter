@@ -1,0 +1,23 @@
+void main() {
+  Pessoa pessoa1 = Pessoa(nome: 'Daniel', idade: 40);
+  pessoa1.cpf = '243.253.346-06';
+  print(pessoa1.cpf); // Ira gerar um erro pois variavel tipo late tem que ser instanciada com algum valor
+  print(pessoa1.temperatura);
+}
+
+class Pessoa {
+  Pessoa({required this.nome, required this.idade});
+
+  String nome;
+  int idade;
+  
+  late String cpf;
+  
+  late double temperatura = medirTemperatura();
+  
+  double medirTemperatura(){
+    print('Mediu a temperatura !!');
+    return 37.0;
+  }
+  
+}

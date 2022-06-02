@@ -1,0 +1,24 @@
+void main() {
+  saudacoes('Eduardo');
+}
+
+void saudacoes(
+  String nome, { // Usando-se chaves pode-se tonar esses parametros dentro das chaves opcionais(Nomeados)
+  bool mostrarAgora = true,
+  String? cliente, // usa-se a ? para declarar uma variavel nullable
+}) {
+  print('Saudações ${nome.toUpperCase()}');
+
+  String c = cliente ?? 'Não Informado'; // usasse ?? para converter varial nullable em nao nullable sendo obrigado a atribuir um valor a essa variavel
+
+  print('Seja bem vindo ${c.toUpperCase()}!');
+
+  if (mostrarAgora) {
+    print('Agora: ${agora()}');
+  }
+}
+
+String agora() {
+  DateTime agora = DateTime.now();
+  return agora.toString();
+}
