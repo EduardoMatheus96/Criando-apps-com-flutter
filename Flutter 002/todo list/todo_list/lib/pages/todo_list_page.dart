@@ -86,7 +86,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     ),
                     const SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: showDeleteTodosConfimationDialog,
                       style: ElevatedButton.styleFrom(
                         primary: const Color(0xff00d7f3),
                         padding: const EdgeInsets.all(15),
@@ -130,5 +130,39 @@ class _TodoListPageState extends State<TodoListPage> {
         duration: const Duration(seconds: 5),
       ),
     );
+  }
+
+  void showDeleteTodosConfimationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Limpar Tudo?'),
+        content:
+            const Text('Você tem certeza que deseja apagar todas as tarefas?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: TextButton.styleFrom(primary: const Color(0xff00d7f3)),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              deleteAllTodos();
+            },
+            style: TextButton.styleFrom(primary: Colors.red),
+            child: const Text('Limpar Tudo'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void deleteAllTodos() {
+    setState(() {
+      todos.clear();
+    });
   }
 }
