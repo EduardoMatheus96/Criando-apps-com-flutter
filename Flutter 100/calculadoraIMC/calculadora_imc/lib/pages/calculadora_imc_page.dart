@@ -13,12 +13,17 @@ class _CalculadoraIMCPageState extends State<CalculadoraIMCPage> {
   TextEditingController weightControler = TextEditingController();
   TextEditingController heightControler = TextEditingController();
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String _infoText = "Informe seus dados!";
 
   void _resetFields() {
     weightControler.text = "";
     heightControler.text = "";
-    _infoText = "Informe seus dados!";
+    setState(() {
+      _infoText = "Informe seus dados!";
+      _formKey = GlobalKey<FormState>();
+    });
   }
 
   void _calculate() {
@@ -26,7 +31,6 @@ class _CalculadoraIMCPageState extends State<CalculadoraIMCPage> {
       double weight = double.parse(weightControler.text);
       double height = double.parse(heightControler.text) / 100;
       double imc = weight / (height * height);
-      print(imc);
       if (imc < 18.6) {
         _infoText = "Abaixo do Peso (${imc.toStringAsPrecision(4)})";
       } else if (imc >= 18.6 && imc < 24.9) {
@@ -57,57 +61,76 @@ class _CalculadoraIMCPageState extends State<CalculadoraIMCPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Icon(
-              Icons.person_outline,
-              size: 120.0,
-              color: Colors.green,
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Peso (kg)",
-                labelStyle: TextStyle(color: Colors.green),
-              ),
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.green, fontSize: 25.0),
-              controller: weightControler,
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Altura (cm)",
-                labelStyle: TextStyle(color: Colors.green),
-              ),
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.green, fontSize: 25.0),
-              controller: heightControler,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-              child: ElevatedButton(
-                onPressed: _calculate,
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.green,
-                  padding: const EdgeInsets.all(15),
-                ),
-                child: const Text(
-                  "Calcular",
-                  style: TextStyle(color: Colors.white, fontSize: 25.0),
-                ),
-              ),
-            ),
-            Text(
-              _infoText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Icon(
+                Icons.person_outline,
+                size: 120.0,
                 color: Colors.green,
-                fontSize: 25.0,
               ),
-            ),
-          ],
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: "Peso (kg)",
+                  labelStyle: TextStyle(color: Colors.green),
+                ),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.green, fontSize: 25.0),
+                controller: weightControler,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Insira seu Peso!";
+                  }
+                  return null;
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: "Altura (cm)",
+                  labelStyle: TextStyle(color: Colors.green),
+                ),
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.green, fontSize: 25.0),
+                controller: heightControler,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Insira sua Altura!";
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _calculate();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  child: const Text(
+                    "Calcular",
+                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                  ),
+                ),
+              ),
+              Text(
+                _infoText,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.green,
+                  fontSize: 25.0,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
