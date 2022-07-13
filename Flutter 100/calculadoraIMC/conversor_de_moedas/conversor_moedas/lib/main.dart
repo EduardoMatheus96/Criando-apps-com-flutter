@@ -15,9 +15,20 @@ class MyApp extends StatefulWidget {
 class _MyWidgetState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ConversorMoedas(),
+      home: const ConversorMoedas(),
+      theme: ThemeData(
+        hintColor: Colors.amber,
+        primaryColor: Colors.white,
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          focusedBorder:
+              OutlineInputBorder(borderSide: BorderSide(color: Colors.amber)),
+          hintStyle: TextStyle(color: Colors.amber),
+        ),
+      ),
     );
   }
 }
