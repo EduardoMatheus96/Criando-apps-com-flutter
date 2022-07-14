@@ -16,12 +16,68 @@ class ConversorMoedas extends StatefulWidget {
 }
 
 class _ConversorMoedasState extends State<ConversorMoedas> {
+  final realController = TextEditingController();
+  final dolarController = TextEditingController();
+  final euroController = TextEditingController();
+
   double dollar = 0.0;
   double euro = 0.0;
 
   Future<Map> getData() async {
     http.Response response = await http.get(Uri.parse(request));
     return json.decode(response.body);
+  }
+
+  void _realChanged(String text) {
+    double real = 0.0;
+    if (text == '') {
+      real = 0.0;
+    } else {
+      real = double.parse(text);
+      dolarController.text = (real / dollar).toStringAsFixed(2);
+      euroController.text = (real / euro).toStringAsFixed(2);
+    }
+  }
+
+  void _dolarChanged(String text) {
+    double dolar;
+    if (text == '') {
+      dolar = 0.0;
+    } else {
+      dolar = double.parse(text);
+      realController.text = (dolar * dollar).toStringAsFixed(2);
+      euroController.text = ((dolar * dollar) / euro).toStringAsFixed(2);
+    }
+  }
+
+  void _euroChanged(String text) {
+    double euro;
+    if (text == '') {
+      euro = 0.0;
+    } else {
+      euro = double.parse(text);
+      realController.text = (euro * this.euro).toStringAsFixed(2);
+      dolarController.text = ((euro * this.euro) / dollar).toStringAsFixed(2);
+    }
+  }
+
+  Widget buildTextField(String label, String prefix,
+      TextEditingController control, void Function(String)? func) {
+    return TextField(
+      controller: control,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(color: Colors.amber),
+        border: const OutlineInputBorder(),
+        prefixText: prefix,
+      ),
+      style: const TextStyle(
+        color: Colors.amber,
+        fontSize: 25.0,
+      ),
+      onChanged: func,
+      keyboardType: TextInputType.number,
+    );
   }
 
   @override
@@ -68,47 +124,17 @@ class _ConversorMoedasState extends State<ConversorMoedas> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: const [
-                      Icon(Icons.monetization_on,
+                    children: [
+                      const Icon(Icons.monetization_on,
                           size: 150.0, color: Colors.amber),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Reais",
-                          labelStyle: TextStyle(color: Colors.amber),
-                          border: OutlineInputBorder(),
-                          prefixText: "R\$",
-                        ),
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 25.0,
-                        ),
-                      ),
-                      Divider(),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Dólares",
-                          labelStyle: TextStyle(color: Colors.amber),
-                          border: OutlineInputBorder(),
-                          prefixText: "US\$",
-                        ),
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 25.0,
-                        ),
-                      ),
-                      Divider(),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Euros",
-                          labelStyle: TextStyle(color: Colors.amber),
-                          border: OutlineInputBorder(),
-                          prefixText: "€\$",
-                        ),
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 25.0,
-                        ),
-                      ),
+                      buildTextField(
+                          "Reais", "R\$ ", realController, _realChanged),
+                      const Divider(),
+                      buildTextField(
+                          "Dolares", "US\$ ", dolarController, _dolarChanged),
+                      const Divider(),
+                      buildTextField(
+                          "Euros", "€\$ ", euroController, _euroChanged),
                     ],
                   ),
                 );
