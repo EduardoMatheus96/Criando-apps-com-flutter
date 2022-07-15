@@ -23,42 +23,45 @@ class _ConversorMoedasState extends State<ConversorMoedas> {
   double dollar = 0.0;
   double euro = 0.0;
 
+  void _clearAll() {
+    realController.text = "";
+    dolarController.text = "";
+    euroController.text = "";
+  }
+
   Future<Map> getData() async {
     http.Response response = await http.get(Uri.parse(request));
     return json.decode(response.body);
   }
 
   void _realChanged(String text) {
-    double real = 0.0;
-    if (text == '') {
-      real = 0.0;
-    } else {
-      real = double.parse(text);
-      dolarController.text = (real / dollar).toStringAsFixed(2);
-      euroController.text = (real / euro).toStringAsFixed(2);
+    if (text.isEmpty) {
+      _clearAll();
+      return;
     }
+    double real = double.parse(text);
+    dolarController.text = (real / dollar).toStringAsFixed(2);
+    euroController.text = (real / euro).toStringAsFixed(2);
   }
 
   void _dolarChanged(String text) {
-    double dolar;
-    if (text == '') {
-      dolar = 0.0;
-    } else {
-      dolar = double.parse(text);
-      realController.text = (dolar * dollar).toStringAsFixed(2);
-      euroController.text = ((dolar * dollar) / euro).toStringAsFixed(2);
+    if (text.isEmpty) {
+      _clearAll();
+      return;
     }
+    double dolar = double.parse(text);
+    realController.text = (dolar * dollar).toStringAsFixed(2);
+    euroController.text = ((dolar * dollar) / euro).toStringAsFixed(2);
   }
 
   void _euroChanged(String text) {
-    double euro;
-    if (text == '') {
-      euro = 0.0;
-    } else {
-      euro = double.parse(text);
-      realController.text = (euro * this.euro).toStringAsFixed(2);
-      dolarController.text = ((euro * this.euro) / dollar).toStringAsFixed(2);
+    if (text.isEmpty) {
+      _clearAll();
+      return;
     }
+    double euro = double.parse(text);
+    realController.text = (euro * this.euro).toStringAsFixed(2);
+    dolarController.text = ((euro * this.euro) / dollar).toStringAsFixed(2);
   }
 
   Widget buildTextField(String label, String prefix,
