@@ -1,5 +1,4 @@
 import 'package:busca_gifs/pages/busca_gifs_page.dart';
-import 'package:busca_gifs/pages/gif_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

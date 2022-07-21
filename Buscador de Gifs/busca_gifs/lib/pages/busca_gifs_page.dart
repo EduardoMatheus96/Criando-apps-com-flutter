@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:busca_gifs/pages/gif_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -68,38 +67,36 @@ class _BuscaGifState extends State<BuscaGif> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => GifPage(
-                          gifData: snapshot.data["data"][index],
+                          snapshot.data["data"][index],
                         )),
               );
             },
           );
         } else {
-          return Container(
-            child: GestureDetector(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 70.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Carregar mais...",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+          return GestureDetector(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 70.0,
+                ),
+                Expanded(
+                  child: Text(
+                    "Carregar mais...",
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
                   ),
-                ],
-              ),
-              onTap: () {
-                setState(() {
-                  _offset += 20;
-                });
-              },
+                ),
+              ],
             ),
+            onTap: () {
+              setState(() {
+                _offset += 20;
+              });
+            },
           );
         }
       },

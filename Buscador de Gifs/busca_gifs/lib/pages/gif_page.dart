@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GifPage extends StatelessWidget {
-  const GifPage(data, {Key? key, required this.gifData}) : super(key: key);
+  const GifPage(this.gifData, {Key? key}) : super(key: key);
 
   final Map gifData;
 
@@ -15,7 +15,7 @@ class GifPage extends StatelessWidget {
       ),
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.network(gifData["images"]["fixed_heigth"]["url"]),
+        child: Image.network(gifData["images"]["fixed_height"]["url"]),
       ),
     );
   }
