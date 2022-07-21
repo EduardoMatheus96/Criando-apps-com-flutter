@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:busca_gifs/pages/gif_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:share_plus/share_plus.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class BuscaGif extends StatefulWidget {
   const BuscaGif({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class _BuscaGifState extends State<BuscaGif> {
   Future<Map> _getGifs() async {
     http.Response response;
 
-    if (_search == null) {
+    if (_search == null || _search!.isEmpty) {
       response = await http.get(Uri.parse(
           "https://api.giphy.com/v1/gifs/trending?api_key=qhKAg1eVZ8uCCSCN1rkaBe5TuqKFkIvr&limit=21&rating=g"));
     } else {
@@ -38,7 +40,7 @@ class _BuscaGifState extends State<BuscaGif> {
   }
 
   int _getCount(List data) {
-    if (_search == null) {
+    if (_search == null || _search!.isEmpty) {
       return data.length;
     } else {
       return data.length + 1;
@@ -55,10 +57,14 @@ class _BuscaGifState extends State<BuscaGif> {
       ),
       itemCount: _getCount(snapshot.data["data"]),
       itemBuilder: (context, index) {
-        if (_search == null || index < snapshot.data["data"].length) {
+        if (_search == null ||
+            _search!.isEmpty ||
+            index < snapshot.data["data"].length) {
           return GestureDetector(
-            child: Image.network(
-              snapshot.data["data"][index]["images"]["fixed_height"]["url"],
+            child: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image: snapshot.data["data"][index]["images"]["fixed_height"]
+                  ["url"],
               height: 300.0,
               fit: BoxFit.cover,
             ),
@@ -70,6 +76,10 @@ class _BuscaGifState extends State<BuscaGif> {
                           snapshot.data["data"][index],
                         )),
               );
+            },
+            onLongPress: () {
+              Share.share(snapshot.data["data"][index]["images"]["fixed_height"]
+                  ["url"]);
             },
           );
         } else {
