@@ -27,9 +27,9 @@ class ContactHelper {
     }
   }
 
-  Future<Database?> initDb() async {
+  Future<Database> initDb() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, "contacts.db");
+    final path = join(databasePath, "contactsnew.db");
 
     return await openDatabase(
       path,
@@ -39,7 +39,7 @@ class ContactHelper {
         int newerVersion,
       ) async {
         await db.execute(
-            "CREATE TABLE $contactTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $emailColumn TEXT, $phoneColumn TEXT"
+            "CREATE TABLE $contactTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $emailColumn TEXT, $phoneColumn TEXT, "
             " $imgColumn TEXT)");
       },
     );
@@ -110,10 +110,12 @@ class Contact {
   //Contact(this.id, this.name, this.email, this.phone, this.img);
 
   int? id;
-  late String name;
+  String? name;
   late String email;
   late String phone;
-  late String img;
+  String? img;
+
+  Contact();
 
   Contact.fromMap(Map map) {
     id = map[idColumn];
