@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:agenda_contatos/helpers/contact_helper.dart';
 import 'package:agenda_contatos/ui/contact_page.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+enum OrderOptions { orderaz, orderza }
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -31,7 +34,21 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Contatos"),
         backgroundColor: Colors.red,
         centerTitle: true,
-        actions: [],
+        actions: [
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                value: OrderOptions.orderaz,
+                child: Text("Ordenar de A-Z"),
+              ),
+              const PopupMenuItem<OrderOptions>(
+                value: OrderOptions.orderza,
+                child: Text("Ordenar de Z-A"),
+              ),
+            ],
+            onSelected: _orderList,
+          )
+        ],
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
@@ -68,6 +85,7 @@ class _HomePageState extends State<HomePage> {
                         ? FileImage(File(contacts[index]!.img as String))
                         : const AssetImage("images/person.png")
                             as ImageProvider,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -105,9 +123,71 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: () {
-        _showContactPage(contact: contacts[index]);
+        _showOptions(context, index);
       },
     );
+  }
+
+  void _showOptions(BuildContext context, index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        child: const Text(
+                          "Ligar",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {
+                          launchUrl(Uri.parse("tel:${contacts[index]!.phone}"));
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        child: const Text(
+                          "Editar",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _showContactPage(contact: contacts[index]);
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextButton(
+                        child: const Text(
+                          "Excluir",
+                          style: TextStyle(color: Colors.red, fontSize: 20.0),
+                        ),
+                        onPressed: () {
+                          helper.deleteContact(contacts[index]!.id as int);
+                          setState(() {
+                            contacts.removeAt(index);
+                            Navigator.pop(context);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 
   Future<void> _showContactPage({Contact? contact}) async {
@@ -134,5 +214,21 @@ class _HomePageState extends State<HomePage> {
         contacts = list as List<Contact?>;
       });
     });
+  }
+
+  void _orderList(OrderOptions result) {
+    switch (result) {
+      case OrderOptions.orderaz:
+        contacts.sort((a, b) {
+          return a!.name!.toLowerCase().compareTo(b!.name!.toLowerCase());
+        });
+        break;
+      case OrderOptions.orderza:
+        contacts.sort((a, b) {
+          return b!.name!.toLowerCase().compareTo(a!.name!.toLowerCase());
+        });
+        break;
+    }
+    setState(() {});
   }
 }

@@ -111,8 +111,8 @@ class Contact {
 
   int? id;
   String? name;
-  late String email;
-  late String phone;
+  String? email;
+  String? phone;
   String? img;
 
   Contact();
