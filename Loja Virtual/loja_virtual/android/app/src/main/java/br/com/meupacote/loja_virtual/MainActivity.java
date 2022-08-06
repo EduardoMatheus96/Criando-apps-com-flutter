@@ -1,4 +1,4 @@
-package br.com.flutterstudy.loja_virtual;
+package br.com.meupacote.loja_virtual;
 
 import io.flutter.embedding.android.FlutterActivity;
 
