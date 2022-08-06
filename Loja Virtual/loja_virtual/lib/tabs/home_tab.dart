@@ -1,9 +1,21 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({Key? key}) : super(key: key);
+
+  Future<QuerySnapshot> _getData() async {
+    await Firebase.initializeApp();
+    return await FirebaseFirestore.instance
+        .collection("home")
+        .orderBy("pos")
+        .get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +35,9 @@ class HomeTab extends StatelessWidget {
     return Stack(
       children: [
         _buildBodyBack(),
-        const CustomScrollView(
+        CustomScrollView(
           slivers: [
-            SliverAppBar(
+            const SliverAppBar(
               floating: true,
               snap: true,
               backgroundColor: Colors.transparent,
@@ -34,7 +46,42 @@ class HomeTab extends StatelessWidget {
                 title: Text('Novidades'),
                 centerTitle: true,
               ),
-            )
+            ),
+            FutureBuilder<QuerySnapshot>(
+              future: _getData(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return SliverToBoxAdapter(
+                    child: Container(
+                      height: 200.0,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    ),
+                  );
+                } else {
+                  return SliverStaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 1.0,
+                    crossAxisSpacing: 1.0,
+                    staggeredTiles: snapshot.data!.docs.map((doc) {
+                      return StaggeredTile.count(
+                        doc.data()["x"],
+                        (doc.data()["y"] as int).toDouble(),
+                      );
+                    }).toList(),
+                    children: snapshot.data!.docs.map((doc) {
+                      return FadeInImage.memoryNetwork(
+                        placeholder: kTransparentImage,
+                        image: doc.data()["image"],
+                        fit: BoxFit.cover,
+                      );
+                    }).toList(),
+                  );
+                }
+              },
+            ),
           ],
         ),
       ],
